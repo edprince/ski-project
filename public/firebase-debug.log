@@ -1,0 +1,16 @@
+[debug] ----------------------------------------------------------------------
+[debug] Command:      node /usr/local/bin/firebase serve
+[debug] CLI Version:  3.2.1
+[debug] Platform:     linux
+[debug] Node Version: v0.10.25
+[debug] Time:         Tue Jan 31 2017 13:22:45 GMT+0000 (GMT)
+[debug] ----------------------------------------------------------------------
+[debug] 
+[info] Starting Firebase development server...
+[info] 
+[info] Project Directory: /home/ed/dev/ski-project
+[warn] ⚠  Port 5000 is not available. Trying another port...
+[warn] ⚠  Port 5001 is not available. Trying another port...
+[info] Public Directory: public
+[info] 
+[info] Server listening at: http://localhost:5002

@@ -1,0 +1,50 @@
+@media (max-width: 800px){
+  button {
+    width: 100%;
+  }
+}
+
+* {
+  font-family: 'Questrial', sans-serif;
+}
+
+button {
+  background-color: #039be5;
+  color: white;
+  text-transform: uppercase;
+  padding: 1.2em;
+  margin: 0 auto;
+  margin-top: 1em;
+  display: block;
+  border-radius: 5px;
+}
+
+.form input {
+  background-color: #e7e7e7 !important;
+  padding: 1em;
+  border: none;
+  border-radius: 5px;
+  margin-bottom: 1em;
+}
+
+.form {
+  width: 90%;
+  margin: 0 auto;
+  display: block;
+}
+
+h1 {
+  color: #039be5;
+  margin: 1em;
+  font-family: 'Questrial', sans-serif !important;
+}
+
+.left-align {
+  text-align: left;
+}
+
+.center {
+  text-align: center;
+  display: block;
+  margin: 0 auto;
+}

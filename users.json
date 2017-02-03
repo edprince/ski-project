@@ -1,0 +1,16 @@
+{
+  "users" : {
+    [
+      "email": "edward_prince@hotmail.com",
+      "firstname" : "Ed",
+      "surname" : "Prince",
+      "membership_tier" : "free_basic"
+    ],
+    [
+      "email": "danielprince@hotmail.com",
+      "firstname" : "Dan",
+      "surname" : "Prince",
+      "membership_tier" : "loyalty"
+    ]
+  }
+}

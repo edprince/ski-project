@@ -22,12 +22,18 @@ var login_btn = document.getElementById('login_submit');
 login_btn.addEventListener('click', () => {
   var login_email = document.getElementById('login_email').value;
   var login_password = document.getElementById('login_password').value;
+  firebase.auth().signOut().then(function() {
+    //Sign-out successful.
+  }, function(error) {
+    // An error happened.
+  });
   firebase.auth().signInWithEmailAndPassword(login_email, login_password).catch(function(error) {
     // Handle Errors here.
     var errorCode = error.code;
     var errorMessage = error.message;
-    alert(errorMessage);
+    //alert(errorMessage);
     login_email = '';
     login_password = '';
   });
+  window.location.href = '/main.html';
 });

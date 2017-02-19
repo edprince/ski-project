@@ -1,5 +1,7 @@
 def membership():
-    
+    '''
+    Functio to determine membership
+    '''
     user_membership=None #User has no membership yet
     
     try:

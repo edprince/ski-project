@@ -20,12 +20,12 @@ def membership():
                 payment()#a one off payment is required to become a basic member
                 
                 if booked_sessions>=10:#Member can upgrade their membership after booking 10 sessions
-                    upgrade=input('Would you like to upgrade to the loyalty membership? )
+                    upgrade=input('Would you like to upgrade to the loyalty membership?' )
 
                                   
-            elif ask=='Loyal' or 'Loyalty':
-                user_membership='Loyalty Member'
-                print('You will have to pay an annual fee')
+          	elif ask=='Loyal' or 'Loyalty':
+                	user_membership='Loyalty Member'
+               		print('You will have to pay an annual fee')
                 
     except TypeError:
         if not ask.isalpha():

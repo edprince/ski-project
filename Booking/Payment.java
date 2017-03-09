@@ -1,7 +1,7 @@
 public class Payment {
-	public Object invoiceNumber;
-	public Object amount;
-	public Object date;
+	private string invoiceNumber;
+	private string amount;
+	private int date;
 	public void addPayment() {
 	
 	}

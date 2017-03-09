@@ -1,7 +1,7 @@
 public class Instructor {
-	public Object firstName;
-	public Object lastName;
-	public Object employeeID;
+	private string firstName;
+	private string lastName;
+	private int employeeID;
 	public void getEmployeeID() {
 	
 	}

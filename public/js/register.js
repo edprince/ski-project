@@ -24,10 +24,13 @@ register_submit.addEventListener('click', function() {
   }
   if (validateEmail(email) && validateName(firstname, surname) /*&& validateDob(dob)*/) {
     //Submit details to database
+    console.log('Creating user');
     firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
       var errorCode = error.code;
       var errorMessage = error.message;
+      alert(errorMessage);
     });
+    console.log('done');
     uid = firebase.auth().currentUser.uid;
     console.log(uid);
     database.ref('user/' + uid).set({

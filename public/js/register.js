@@ -4,28 +4,39 @@ var config = {
     authDomain: "sphere-c41ce.firebaseapp.com",
     databaseURL: "https://sphere-c41ce.firebaseio.com", storageBucket: "sphere-c41ce.appspot.com", messagingSenderId: "204422136162"
 };
+
 //INITIALISE FIREBASE
 firebase.initializeApp(config);
 var database = firebase.database();
 var register_submit = document.getElementById('submit');
 
+class user = {
+  constructor(firstname, surname, email, password, membership) {
+    this.firstname = firstname;
+    this.surname = surname;
+    this.email = email;
+    this.password = password;
+    this.membership = membership;
+  }
+}
 
 register_submit.addEventListener('click', function() {
-  //Submit New User
-  var email = document.getElementById('user_email').value;
-  var firstname = document.getElementById('user_firstname').value;
-  var surname = document.getElementById('user_surname').value;
-  var password = document.getElementById('user_password').value;
-  var membership = document.querySelector('input[name="membership"]:checked').value;
-  if (membership == 'member') {
-    membership = 1;
+  var newUser = new user(
+    get('user_firstname'),
+    get('user_surname'),
+    get('user_email'),
+    get('user_password'),
+    document.querySelector('input[name="membership"]:checked').value
+  );
+  if (newUser.membership == 'member') {
+    newUser.membership = 1;
   } else {
-    membership = 2;
+    newUser.membership = 2;
   }
-  if (validateEmail(email) && validateName(firstname, surname) /*&& validateDob(dob)*/) {
+  if (validateEmail(newUser.email) && validateName(newUser.firstname, newUser.surname) /*&& validateDob(dob)*/) {
     //Submit details to database
     console.log('Creating user');
-    firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
+    firebase.auth().createUserWithEmailAndPassword(newUser.email, newUser.password).catch(function(error) {
       var errorCode = error.code;
       var errorMessage = error.message;
       alert(errorMessage);
@@ -34,20 +45,19 @@ register_submit.addEventListener('click', function() {
     uid = firebase.auth().currentUser.uid;
     console.log(uid);
     database.ref('user/' + uid).set({
-      'firstname': firstname,
-      'surname': surname,
-      'email': email,
+      'firstname': newUser.firstname,
+      'surname': newUser.surname,
+      'email': newUser.email,
       //Tier 1,2,3 (registered, free basic, loyalty)
-      'membership_tier': membership
+      'membership_tier': newUser.membership
     });
 
 //writeUserData(email, firstname, surname, dob, membership);
   } else {
 //Return user to form to re-complete;
-    email = '';
-    firstname = '';
-    surname = '';
-    dob = '';
+    get('user_email') = '';
+    get('user_firstname') = '';
+    get('user_surname') = '';
     alert('There was an error with some of your information. Please re-enter.');
   };
 });
@@ -68,3 +78,7 @@ function validateDob(dob) {
   //Validates a user submitted date of birth
   return true
 };
+
+function get(id) {
+  return document.getElementById(id).value;
+}

@@ -1,5 +1,8 @@
+function get(id) { 
+  return document.getElementById(id).value;
+}
 //Initialize Firebase
-class DatabaseConnection = {
+class DatabaseConnection {
   constructor() {
     var config = {
         apiKey: "AIzaSyBw2hHMudDYVgfhsWMr6j2fMpOZ8RhZOKw",
@@ -12,7 +15,7 @@ class DatabaseConnection = {
   }
 }
 
-class User = {
+class User {
   constructor(firstname, surname, email, password, membership) {
     this.firstname = firstname;
     this.surname = surname;
@@ -22,11 +25,11 @@ class User = {
   }
 }
 
-class UserInterface = {
+class UserInterface {
   constructor() {
     var register_submit = document.getElementById('submit');
     register_submit.addEventListener('click', function() {
-      var newUser = new user(
+      var newUser = new User(
         get('user_firstname'),
         get('user_surname'),
         get('user_email'),
@@ -47,60 +50,59 @@ class UserInterface = {
         //writeUserData(email, firstname, surname, dob, membership);
       } else {
         //Return user to empty form to re-complete;
-        get('user_email') = '';
-        get('user_firstname') = '';
-        get('user_surname') = '';
+        console.log('Getting here');
+        document.getElementById('user_email').value = '';
+        document.getElementById('user_firstname').value = '';
+        document.getElementById('user_surname').value = '';
         alert('There was an error with some of your information. Please re-enter.');
       };
     });
   }
 }
 
-class ReadWriteDatabase = {
+class ReadWriteDatabase {
   constructor() {
     console.log('Ready to communicate with database')
   }
-  function createUser(user) {
+
+  createUser(user) {
     firebase.auth().createUserWithEmailAndPassword(user.email, user.password).catch(function(error) {
       var errorCode = error.code;
       var errorMessage = error.message;
       alert(errorMessage);
     });
   }
-  function writeUserInfo(user) {
+  writeUserInfo(user) {
     var uid = firebase.auth().currentUser.uid;
-    database.ref('user/' + uid).set({
-      'firstname': newUser.firstname,
-      'surname': newUser.surname,
-      'email': newUser.email,
+    firebase.database().ref('user/' + uid).set({
+      'firstname': user.firstname,
+      'surname': user.surname,
+      'email': user.email,
       //Tier 1,2,3 (registered, free basic, loyalty)
-      'membership_tier': newUser.membership
+      'membership_tier': user.membership
     });
   }
 }
 
-class Validate = {
+class Validate {
   constructor() {};
   //Validation Functions
-  function email(email) {
+  email(email) {
     //var re = new regExp(".*@.*\..*");
     //return email.match(re);
     return true;
   };
-  function name(name) {
+  name(name) {
     if (name) {
       return true;
     }
   };
-  function dob(dob) {
+  dob(dob) {
     //Validates a user submitted date of birth
     return true;
   };
 }
 
-function get(id) {
-  return document.getElementById(id).value;
-}
 
 var db_cnx = new DatabaseConnection();
 var ui = new UserInterface();

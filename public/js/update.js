@@ -39,7 +39,6 @@ class SlopeUI {
     searchButton.addEventListener('click', function() {
       var db = new SearchMemberController();
       db.SearchMember(Member);
-      db.DisplayMember(Member);
     });
     updateMember.addEventListener('click', function() {
       var db = UpdateMemberController();
@@ -58,11 +57,8 @@ class SearchMemberController {
     var searchMember = document.getElementById("Search");
     var text = searchMember.value;
     var memberRef = firebase.database().ref().child('user');
-    memberRef.orderByChild("firstname").equalTo(text).on("child_added", function(snapshot) {
+    var snapshot = memberRef.orderByChild("firstname").equalTo(text).on("child_added", function(snapshot) {
       console.log(snapshot.val().firstname +" " + snapshot.val().surname);
-    });
-  }
-  DisplayMember(Member) {
     var firstname = document.getElementById("firstname_update");
     var surname = document.getElementById("surname_update");
     var email = document.getElementById("email_update");
@@ -75,7 +71,8 @@ class SearchMemberController {
     address.value = snapshot.val().address;
     membership.value = snapshot.val().membership;
     dob.value = snapshot.val().dob;
-  };
+    });
+   }
 }
 
 class UpdateMemberController {

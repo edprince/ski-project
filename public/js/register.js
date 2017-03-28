@@ -81,6 +81,7 @@ class ReadWriteDatabase {
       //Tier 1,2,3 (registered, free basic, loyalty)
       'membership_tier': user.membership
     });
+    window.location = '/main.html';
   }
 }
 

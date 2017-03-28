@@ -49,6 +49,6 @@ class Member_UI {
         alert('You need to have more than 10 bookings to become a loayalty member! ');
     }
 
-    })
+    });
   }
 }

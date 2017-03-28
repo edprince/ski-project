@@ -16,16 +16,14 @@ class DatabaseConnection {
 }
 
 class User {
-  constructor(firstname, surname, email, password, membership, dob, address1, city, postcode) {
+  constructor(firstname, surname, email, password, membership, dob, address) {
     this.firstname = firstname;
     this.surname = surname;
     this.email = email;
     this.password = password;
     this.membership = membership;
     this.dob = dob;
-    this.address1 = address1;
-    this.city = city;
-    this.postcode = postcode;
+    this.address1 = address;
   }
 }
 
@@ -39,9 +37,7 @@ class UserInterface {
         get('user_email'),
         get('user_password'),
         get('user_dob'),
-        get('user_address1'),
-        get('user_city'),
-        get('user_postcode'),
+        get('user_address')
         document.querySelector('input[name="membership"]:checked').value
       );
       if (newUser.membership == 'member') {

@@ -46,9 +46,9 @@ class Member_UI {
         });
       } else {
       //Print error message explaining why they can't become a loyalty member
-        alert('You need to have more than 10 bookings to become a member! ');
+        alert('You need to have more than 10 bookings to become a loayalty member! ');
     }
 
-    }
+    })
   }
 }

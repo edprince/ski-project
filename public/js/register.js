@@ -37,7 +37,7 @@ class UserInterface {
         get('user_email'),
         get('user_password'),
         get('user_dob'),
-        get('user_address')
+        get('user_address'),
         document.querySelector('input[name="membership"]:checked').value
       );
       if (newUser.membership == 'member') {
@@ -75,6 +75,9 @@ class ReadWriteDatabase {
       var errorMessage = error.message;
       alert(errorMessage);
     }, this.writeUserInfo(user));
+    setTimeout(function(){
+      this.writeUserInfo(user);
+    },2000);
   }
   writeUserInfo(user) {
     var uid = firebase.auth().currentUser.uid;
@@ -84,6 +87,8 @@ class ReadWriteDatabase {
       'email': user.email,
       //Tier 1,2,3 (registered, free basic, loyalty)
       'membership_tier': user.membership,
+      'dob': user.dob,
+      'address': user.address,
       'session_count': 0
     });
     window.location = '/main.html';
@@ -107,6 +112,18 @@ class Validate {
     //Validates a user submitted date of birth
     return true;
   };
+}
+
+class UnitTesting {
+  constructor() {
+    var v = new Validate();
+    var emails = [['',false], ['1', false], ['@.', false], ['ed@com', false], ['another@hotmail/com', false], ['boo', false], ['spoof.', false], ['ed@hotmail.com', true]];
+    var dob = ['12.01.1996', '12/1/1996', '12/1/96', '14/15/19094', '987.1231.123', '', '1', '00/00/0000'];
+    console.log('All values should match to pass all tests');
+    for x in range(emails.length) {
+      console.log(v.email(emails[x][0]), emails[x][1]);
+    }
+  }
 }
 
 var db_cnx = new DatabaseConnection();

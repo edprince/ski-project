@@ -1,4 +1,4 @@
-function get(id) { 
+function get(id) {
   return document.getElementById(id).value;
 }
 //Initialize Firebase
@@ -16,12 +16,16 @@ class DatabaseConnection {
 }
 
 class User {
-  constructor(firstname, surname, email, password, membership) {
+  constructor(firstname, surname, email, password, membership, dob, address1, city, postcode) {
     this.firstname = firstname;
     this.surname = surname;
     this.email = email;
     this.password = password;
     this.membership = membership;
+    this.dob = dob;
+    this.address1 = address1;
+    this.city = city;
+    this.postcode = postcode;
   }
 }
 
@@ -34,12 +38,16 @@ class UserInterface {
         get('user_surname'),
         get('user_email'),
         get('user_password'),
+        get('user_dob'),
+        get('user_address1'),
+        get('user_city'),
+        get('user_postcode'),
         document.querySelector('input[name="membership"]:checked').value
       );
       if (newUser.membership == 'member') {
-        newUser.membership = 1;
+        newUser.membership = 'yes';
       } else {
-        newUser.membership = 2;
+        newUser.membership = 'no';
       }
       var validate = new Validate();
       if (validate.email(newUser.email) && validate.name(newUser.firstname, newUser.surname) /*&& validateDob(dob)*/) {
@@ -79,7 +87,8 @@ class ReadWriteDatabase {
       'surname': user.surname,
       'email': user.email,
       //Tier 1,2,3 (registered, free basic, loyalty)
-      'membership_tier': user.membership
+      'membership_tier': user.membership,
+      'session_count': 0
     });
     window.location = '/main.html';
   }
@@ -103,7 +112,6 @@ class Validate {
     return true;
   };
 }
-
 
 var db_cnx = new DatabaseConnection();
 var ui = new UserInterface();

@@ -26,13 +26,13 @@ class Member_UI{
 
     yes_member.addEventListener('click', function(){
 
-      var basic=document.getElementById("Basic Membership( No charge )");
-      var loyalty=document.getElementById('Loyalty Membership( Annual Payment )');
+      var basic=document.getElementById("free_membership");
+      var loyalty=document.getElementById('loyalty_membership');
 
       basic.addEventListener('click', function(){
-                             membership='Basic';}
-                            );
-      
+        membership='Basic';
+      });
+
       loyalty.addEventListener('click',function(){
         //check if number of sessions booked is >10
         //Button is clicked => Get snapshot, see if numberOfSession > 10
@@ -53,6 +53,4 @@ class Member_UI{
         });
       }
   }
-                                
-
 }

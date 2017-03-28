@@ -17,8 +17,8 @@ class Databaseconnection{
 
 //get user id and information
 //if user is registered then proceed to membership
-class Member_UI{
-  constructor(){
+class Member_UI {
+  constructor() {
     var membership=None;
     var question=document.getElementById("Would you like to become a member?");
     var yes_member=document.getElementById("Yes");
@@ -38,16 +38,17 @@ class Member_UI{
       var sessionCount = firebase.database().ref('users/' + uid + '/session_count');
       sessionCount.on('value', function(snapshot) {
         var numberOfSessions = snapshot.val();
-        if (sessionCount>=10) {
-          //Assign loyalty membership
-            firebase.database().ref('user/' + uid).set({
-              'membership_tier': 'loyalty'
-            });
-        } else {
-          //Print error message explaining why they can't become a loyalty member
-          alert('You need to have more than 10 bookings to become a member! ');
-        }
       });
+      if (sessionCount>=10) {
+        //Assign loyalty membership
+        firebase.database().ref('user/' + uid).set({
+          'membership_tier': 'loyalty'
+        });
+      } else {
+      //Print error message explaining why they can't become a loyalty member
+        alert('You need to have more than 10 bookings to become a member! ');
+    }
+
     }
   }
 }

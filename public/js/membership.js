@@ -31,8 +31,8 @@ class Member_UI{
 
       basic.addEventListener('click', function(){
                              membership='Basic';}
-
-                              )
+                            );
+      
       loyalty.addEventListener('click',function(){
         //check if number of sessions booked is >10
         //Button is clicked => Get snapshot, see if numberOfSession > 10
@@ -41,18 +41,18 @@ class Member_UI{
         var sessionCount = firebase.database().ref('users/' + uid + '/session_count');
           sessionCount.on('value', function(snapshot) {
           var numberOfSessions = snapshot.val();
-          if () {
+          if (sessionCount>=10) {
             //Assign loyalty membership
               firebase.database().ref('user/' + uid).set({
                 'membership_tier': 'loyalty'
               });
           } else {
-            //Print error message explaining
-            alert('');
+            //Print error message explaining why they can't become a loyalty member
+            alert('You need to have more than 10 bookings to become a member! ');
           }
         });
       }
   }
-                                )
+                                
 
 }

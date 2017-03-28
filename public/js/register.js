@@ -46,7 +46,7 @@ class UserInterface {
         //Submit details to databaseURL
         var db = new ReadWriteDatabase();
         db.createUser(newUser);
-        db.writeUserInfo(newUser);
+        //db.writeUserInfo(newUser);
         //writeUserData(email, firstname, surname, dob, membership);
       } else {
         //Return user to empty form to re-complete;
@@ -70,7 +70,7 @@ class ReadWriteDatabase {
       var errorCode = error.code;
       var errorMessage = error.message;
       alert(errorMessage);
-    });
+    }, this.writeUserInfo(user));
   }
   writeUserInfo(user) {
     var uid = firebase.auth().currentUser.uid;

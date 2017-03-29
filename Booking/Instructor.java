@@ -6,7 +6,7 @@ public class Instructor {
 	
 	}
 	
-	public void setEmployeeName(string aEmployeeName) {
+	public void setEmployeeName(string EmployeeName) {
 	
 	}
 	
@@ -14,7 +14,7 @@ public class Instructor {
 	
 	}
 	
-	public void setEmployeeID(int aEmployeeID) {
+	public void setEmployeeID(int EmployeeID) {
 	
 	}
 }

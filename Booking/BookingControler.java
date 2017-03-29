@@ -1,9 +1,9 @@
 public class BookingControler {
 	public CustomerRepoImpl; customerRepo;
 	public InstructorRepoImpl; instructorRepo;
-	public Session Unnamed2;
-	public Instructor Unnamed3;
-	public Customer Unnamed4;
+	public Session;
+	public Instructor;
+	public Customer;
 	public void makeSession(int slopeID, Date startingTime, Date endingTime) {
 	
 	}

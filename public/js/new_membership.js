@@ -1,4 +1,4 @@
-unction get(id) {
+function get(id) {
 	return document.getElementById(id).value;
 }
 
@@ -59,11 +59,9 @@ class SearchMemberController {
     var memberRef = firebase.database().ref().child('user');
     memberRef.orderByChild("firstname").equalTo(text).on("child_added", function(snapshot) {
     	userReference = snapshot.key; 
-    	var firstname = document.getElementById("firstname_update");
-        var surname = document.getElementById("surname_update");
+    	
     	var membership = document.getElementById("membership_update");
-    	firstname.value = snapshot.val().firstname;
-    	surname.value = snapshot.val().surname;
+ 
     	membership.value = snapshot.val().membership;
     	 
     });

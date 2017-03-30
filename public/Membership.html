@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-
 <html>
   <head>
+    <script src="https://www.gstatic.com/firebasejs/3.7.0/firebase.js"></script>
     <link href="https://fonts.googleapis.com/css?family=ABeeZee|Alegreya|Alegreya+Sans|Questrial" rel="stylesheet">
     <link href='https://cdnjs.cloudflare.com/ajax/libs/foundation/6.3.0/css/foundation.css' type='text/css' rel='stylesheet'> <link href='css/main.css' type='text/css' rel='stylesheet'>
     <meta name='viewport' content='device-width, initial-scale=1'>
@@ -14,26 +14,33 @@
       }
     </style>
   </head>
-  <body id='Membership'>
-    <div>
-      <h1>Sphere - Membership</h1>
-      <h2> Member search by name</h2>
+  <body>
+    <div class="form">
+     	<h1>Sphere - Membership</h1>
+    	<input type = "text" id = "Search"> <button id = "SearchButton">User Search</button>
+	<br>
+	<br>
+	<table>
+	 <tbody id='table_body'></tbody>
+          <thead>
+		<tr>
+		    <td>First Name</td>
+		    <td>Surname</td>
+		    <td>Membership Status</td>
+		    <td>Make Changes</td>
+		</tr><tr>
+			<td><input type='text' id='firstname_update'></td>
+			<td><input type='text' id='surname_update'></td>
+			<td><input type='text' id='membership_update' readOnly></td>
+			<td> <button id ="Update">Update</button>
+		        <button id = "Delete">Delete</button> </td>
+	    </tr>
+	  </thead>
+	</table>
+	<button id ="Clear">Clear</button>
     </div>
-    <div class='form'>
-      <input type='text' name='id' placeholder='First Name'id='user_firstname'>
-      <input type='text' id='user_surname' placeholder='Surname'>
-      
-      
-      
-      
-      <label>Would you like to become a loyal or basic <br />
-        <input class='left-align' type='radio' name='membership' value='basic_member' id='membership_yes' checked>Basic
-        <input class='left-align' type='radio' name='membership' value='loyalty_member' id='membership_yes'>Loyalty
-      </label>
-      <button id='submit'>Submit</button>
-    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.6.8/firebase.js"></script>
+    <script src='js/update.js'></script>
   </body>
-  <script src="https://www.gstatic.com/firebasejs/3.6.8/firebase.js"></script>
-  <script src='js/register.js'></script>
-  <!--<script src='js/app.js'></script>-->
 </html>

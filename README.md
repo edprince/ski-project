@@ -1,7 +1,7 @@
 # ski-project
 Ski slope real world project - 260CT
 
-Prototype live at https://ski-project-4483d.firebaseapp.com/
+Prototype live at https://sphere-c41ce.firebaseapp.com/
 
 ##Requires
  - Firebase

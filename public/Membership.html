@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <link href="https://fonts.googleapis.com/css?family=ABeeZee|Alegreya|Alegreya+Sans|Questrial" rel="stylesheet">
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/foundation/6.3.0/css/foundation.css' type='text/css' rel='stylesheet'> <link href='css/main.css' type='text/css' rel='stylesheet'>
+    <meta name='viewport' content='device-width, initial-scale=1'>
+    <meta charset="utf-8">
+    <title>Sphere Ski Centre</title>
+    <style media="screen">
+      body {
+        background: #ECEFF1;
+        color: rgba(0,0,0,0.87);
+      }
+    </style>
+  </head>
+  <body id='Membership'>
+    <div>
+      <h1>Sphere - Membership</h1>
+      <h2> Member search by name</h2>
+    </div>
+    <div class='form'>
+      <input type='text' name='id' placeholder='First Name'id='user_firstname'>
+      <input type='text' id='user_surname' placeholder='Surname'>
+      
+      
+      
+      
+      <label>Would you like to become a loyal or basic <br />
+        <input class='left-align' type='radio' name='membership' value='basic_member' id='membership_yes' checked>Basic
+        <input class='left-align' type='radio' name='membership' value='loyalty_member' id='membership_yes'>Loyalty
+      </label>
+      <button id='submit'>Submit</button>
+    </div>
+  </body>
+  <script src="https://www.gstatic.com/firebasejs/3.6.8/firebase.js"></script>
+  <script src='js/register.js'></script>
+  <!--<script src='js/app.js'></script>-->
+</html>

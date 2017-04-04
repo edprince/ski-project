@@ -54,7 +54,7 @@ class Member_UI {
           //Button is clicked => Get snapshot, see if numberOfSession > 10
           //If so can become loyalty members
           //If not Refused
-          firebase.database().ref('/users/' + uid).once('value').then(function(snapshot) {
+          database.ref('/user/' + uid).once('value').then(function(snapshot) {
             console.log(snapshot.val());
             var sessionCount = snapshot.val().session_count;
             console.log(sessionCount, ' session count');

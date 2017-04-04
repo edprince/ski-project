@@ -7,11 +7,16 @@ function get(id) {
 class DatabaseConnection {
   constructor() {
     var config = {
+      /*
       apiKey: "AIzaSyD1__SyPP9HQ4-ViwJxH6s8EACpCY9-k34",
       authDomain: "skiproject-8236e.firebaseapp.com",
       databaseURL: "https://skiproject-8236e.firebaseio.com",
       storageBucket: "skiproject-8236e.appspot.com",
       messagingSenderId: "633876681860"
+      */
+      apiKey: "AIzaSyBw2hHMudDYVgfhsWMr6j2fMpOZ8RhZOKw",
+      authDomain: "sphere-c41ce.firebaseapp.com",
+      databaseURL: "https://sphere-c41ce.firebaseio.com", storageBucket: "sphere-c41ce.appspot.com", messagingSenderId: "204422136162"
     }
     firebase.initializeApp(config);
     var database = firebase.database();

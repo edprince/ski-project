@@ -48,7 +48,7 @@ class UserInterface {
       var validate = new Validate();
       if (validate.email(newUser.email) && validate.name(newUser.firstname, newUser.surname) /*&& validateDob(dob)*/) {
         //Submit details to databaseURL
-        var db = new ReadWriteDatabase();
+        var db = new User_controller();
         db.createUser(newUser);
         db.writeUserInfo(newUser);
         //db.writeUserInfo(newUser);
@@ -65,7 +65,7 @@ class UserInterface {
   }
 }
 
-class ReadWriteDatabase {
+class User_controller {
   constructor() {
     console.log('Ready to communicate with database')
   }

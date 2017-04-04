@@ -3,6 +3,7 @@
   <head>
     <link href="https://fonts.googleapis.com/css?family=ABeeZee|Alegreya|Alegreya+Sans|Questrial" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.3.0/css/foundation.css" type="text/css" rel="stylesheet">
+    <link href="css/schedule.css" type="text/css" rel="stylesheet">
     <link href="css/main.css" type="text/css" rel="stylesheet">
     <meta name="viewport" content="device-width, initial-scale=1">
     <meta charset="utf-8">
@@ -21,10 +22,18 @@
       <h1>Sphere - Schedue</h1>
     </div>
 
-    <label for="search">Search:</label>
-    <input type="text" placeholder="Search..." id="thisissearch">
+    <table id="myTable">
+      <tr>
+        <th>Instructor</th>
+        <th>Slope</th>
+        <th>Start Time</th>
+        <th>End Time</th>
+        <th>Group Size</th>
+      </tr>
+    </table>
 
-    <button onclick="getSearch()">Copy Text</button>
+    <br>
+    <p id="test"></p>
 
   </body>
 

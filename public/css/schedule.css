@@ -1,0 +1,9 @@
+table#myTable {
+  width: 100%;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+td {
+  text-align: center;
+}

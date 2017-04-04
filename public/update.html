@@ -17,10 +17,10 @@
   <body>
     <div class="form">
      	<h1>Sphere - Update Details</h1>
-    	<input type = "text" id = "Search"> <button id = "SearchButton">Search</button>
+	<input type = "text" placeholder='Search by First Name' id = "Search"> <button id = "SearchButton">Search</button>
 	<br>
 	<br>
-	<table>
+	<table id='update_table'>
 	 <tbody id='table_body'></tbody>
           <thead>
 		<tr>
@@ -37,7 +37,7 @@
 			<td><input type='text' id='address_update'></td>
 			<td><input type='text' id='email_update'></td>
 			<td><input type='text' id='membership_update' readOnly></td>
-			<td><input type='text' id='dob_update'></td>
+			<td><input type='date' id='dob_update'></td>
 			<td> <button id ="Update">Update</button>
 		        <button id = "Delete">Delete</button> </td>
 	    </tr>
@@ -45,6 +45,11 @@
 	</table>
 	<button id ="Clear">Clear</button>
     </div>
+    <script>
+	function date() {
+		var dateVal = document.getElementById("date").value;
+	}
+</script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.6.8/firebase.js"></script>
     <script src='js/update.js'></script>

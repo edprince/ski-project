@@ -7,11 +7,9 @@ function get(id) {
 class DatabaseConnection {
   constructor() {
     var config = {
-    apiKey: "AIzaSyD1__SyPP9HQ4-ViwJxH6s8EACpCY9-k34",
-    authDomain: "skiproject-8236e.firebaseapp.com",
-    databaseURL: "https://skiproject-8236e.firebaseio.com",
-    storageBucket: "",
-    messagingSenderId: "633876681860"
+       apiKey: "AIzaSyBw2hHMudDYVgfhsWMr6j2fMpOZ8RhZOKw",
+       authDomain: "sphere-c41ce.firebaseapp.com",
+       databaseURL: "https://sphere-c41ce.firebaseio.com", storageBucket: "sphere-c41ce.appspot.com", messagingSenderId: "204422136162"
     }
     firebase.initializeApp(config);
     var database = firebase.database();
@@ -31,7 +29,6 @@ class Member {
 }
 
 //Class SlopeUI which controlls class Controller 
-//
 class SlopeUI {
   constructor() {
     var searchButton = document.getElementById("SearchButton");
@@ -40,7 +37,8 @@ class SlopeUI {
     var clearButton = document.getElementById("Clear");	
    //Event Listener which Searches for Member when button Search is pressed  
     searchButton.addEventListener('click', function() {	    
-      var db = new Controller();
+      var db = Controller.GetInstance();
+      //var db = new Controller();
       db.SearchMember(Member);	    
     });
    //Event Listener which updates Member details when button Update is pressed
@@ -54,18 +52,21 @@ class SlopeUI {
       );
       var validate = new Validate();
       if (validate.name(newUpdate.firstname) && validate.name(newUpdate.surname) && validate.email(newUpdate.email)) { //(validate.addressvalid(newUpdate.address)){
-	 	var db = new Controller();
+	 	//var db = new Controller();
+	        var db = Controller.GetInstance();
 	 	db.UpdateMember(Member);   
 	    } else {
 		  console.log("Invalid input.");
-		  var db = new Controller();
+		  //var db = new Controller();
+		  var db = Controller.GetInstance();
 		  db.SearchMember(Member);
 		  alert('Invalid input. Please re-enter details.');
 	}
     });
     //Event Listener which deletes a member when button Delete is pressed
     deleteMember.addEventListener('click', function() {
-      var db = new Controller();
+      //var db = new Controller();
+      var db = Controller.GetInstance();
       db.DeleteMember(Member);
     });
     //Event listener which refreshes the page when button Clear is pressed
@@ -77,7 +78,23 @@ class SlopeUI {
 
 var userReference;
 var details = {};
+var instance;
 class Controller {
+	static GetInstance() {
+		if(instance==null) {
+			instance = new Controller();
+			}
+			return instance;
+		}
+	
+	
+	/*static GetInstance() {
+		if (instance==null) {
+			//instance=new Controller();
+	} else {
+		return instance;
+	}}
+	*/
 	SearchMember(member) {
 		var searchMember = document.getElementById("Search").value;
 		var memberRef = firebase.database().ref().child('user');
@@ -92,9 +109,9 @@ class Controller {
     				details.firstname.value = snapshot.val().firstname;
     				details.surname.value = snapshot.val().surname;
     				details.email.value = snapshot.val().email;
-    				details.address.value = snapshot.val().address;
     				details.membership.value = snapshot.val().membership_tier;
     				details.dob.value = snapshot.val().dob; 
+				details.address.value = snapshot.val().address;
    			 });
     	}
 	UpdateMember(member) {
@@ -106,7 +123,8 @@ class Controller {
 			'membership_tier': details.membership.value,
 			'dob': details.dob.value
 		});
-			$("#table_body").append("tr.><td>" + details.firstname.value + "</td><td>" + details.surname.value + "</td><td>" + details.address.value + "</td><td>" + details.email.value + "</td><td>" + details.membership.value + "</td><td>" + details.dob.value + "</tr></td>");
+			$("#table_body").append("tr><td>" + details.firstname.value + "</td><td>" + details.surname.value + "</td><td>" + details.address.value + "</td><td>" + details.email.value + "</td><td>" + details.membership.value + "</td><td>" + details.dob.value + "</tr></td>");
+		$("#table_body").append("<tr>");
  	 }
 	 DeleteMember(Member) {
 		 firebase.database().ref('user/'+ userReference).remove();
@@ -122,15 +140,39 @@ class Validate {
     return re.test(email);
 	}
   name(name) {
-    var alphaExp = /^[a-zA-Z]+$/;
+    var re = /^[a-zA-Z]+$/;
+    return re.test(name);
+  }
+   /* var alphaExp = /^[a-zA-Z]+$/;
 	 if(name.match(alphaExp)){
 	 return true; 
-    }
-  };
+    } */
   addressvalid(address) {
 	 return ",#-/ !@$%^*(){}|[]\\".indexOf(address) >= 0;
   }
 }
 
+class UnitTesting {
+  constructor() {
+    var v = new Validate();
+    var emails = [['', false], ['1', false], ['@.', false], ['plamen@com', false], ['another@hotmail/com', false], ['boo', false], ['spoof.', false], ['crew.stein@gmail.com', true]];
+    var names =  [['', false], ['Plamen1', false], ['Plamen@@', false], ['Plamen__ ', false], ['Plamen0', false],['   Plamen  ', false],['Plamen', true]];
+    console.log('All values should match to pass all tests');
+    console.log('Emails');
+    var x;
+    for (x = 0; x < emails.length;x++) {
+      console.log(v.email(emails[x][0]), emails[x][1]);
+    }
+    console.log('Names');
+	  for (x = 0; x <names.length;x++) {
+		  console.log(v.name(names[x][0]), names[x][1]);
+		  }
+
+  }
+}
+
+
+
 var db_cnx = new DatabaseConnection();
 var ui = new SlopeUI();
+var unitTest = new UnitTesting();

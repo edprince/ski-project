@@ -5,7 +5,7 @@ function get(id) {
 class DatabaseConnection {
   constructor() {
     var config = {
-        apiKey: "AIzaSyBw2hHMudDYVgfhsWMr6j2fMpOZ8RhZOKw",
+       apiKey: "AIzaSyBw2hHMudDYVgfhsWMr6j2fMpOZ8RhZOKw",
         authDomain: "sphere-c41ce.firebaseapp.com",
         databaseURL: "https://sphere-c41ce.firebaseio.com", storageBucket: "sphere-c41ce.appspot.com", messagingSenderId: "204422136162"
     }
@@ -23,7 +23,7 @@ class User {
     this.password = password;
     this.membership = membership;
     this.dob = dob;
-    this.address1 = address;
+    this.address = address;
   }
 }
 
@@ -50,6 +50,7 @@ class UserInterface {
         //Submit details to databaseURL
         var db = new ReadWriteDatabase();
         db.createUser(newUser);
+        db.writeUserInfo(newUser);
         //db.writeUserInfo(newUser);
         //writeUserData(email, firstname, surname, dob, membership);
       } else {
@@ -69,16 +70,6 @@ class ReadWriteDatabase {
     console.log('Ready to communicate with database')
   }
 
-  createUser(user) {
-    firebase.auth().createUserWithEmailAndPassword(user.email, user.password).catch(function(error) {
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      alert(errorMessage);
-    }, this.writeUserInfo(user));
-    setTimeout(function(){
-      this.writeUserInfo(user);
-    },2000);
-  }
   writeUserInfo(user) {
     var uid = firebase.auth().currentUser.uid;
     firebase.database().ref('user/' + uid).set({
@@ -92,6 +83,13 @@ class ReadWriteDatabase {
       'session_count': 0
     });
     window.location = '/main.html';
+  }
+  createUser(user) {
+    firebase.auth().createUserWithEmailAndPassword(user.email, user.password).catch(function(error) {
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      alert(errorMessage);
+    });
   }
 }
 
@@ -120,9 +118,11 @@ class UnitTesting {
     var emails = [['',false], ['1', false], ['@.', false], ['ed@com', false], ['another@hotmail/com', false], ['boo', false], ['spoof.', false], ['ed@hotmail.com', true]];
     var dob = ['12.01.1996', '12/1/1996', '12/1/96', '14/15/19094', '987.1231.123', '', '1', '00/00/0000'];
     console.log('All values should match to pass all tests');
+    /*
     for x in range(emails.length) {
       console.log(v.email(emails[x][0]), emails[x][1]);
     }
+    */
   }
 }
 

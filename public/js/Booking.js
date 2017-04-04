@@ -1,4 +1,4 @@
-function get(id) {
+ function get(id) {
     return document.getElementById(id).value;
 }
 
@@ -53,6 +53,7 @@ class SessionInterface {
             document.getElementById('session_customerSurname').value = '';
             document.getElementById('session_instructorFirstname').value = '';
             document.getElementById('session_instructorSurname').value = '';
+            alert('There is some incorrect or missing data.Please try again.');
         }
 
 

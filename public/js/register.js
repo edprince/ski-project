@@ -97,9 +97,9 @@ class Validate {
   constructor() {};
   //Validation Functions
   email(email) {
-    //var re = new regExp(".*@.*\..*");
-    //return email.match(re);
-    return true;
+    var re = /..*@..*\...*/;
+    return re.test(email);
+   // return true;
   };
   name(name) {
     if (name) {
@@ -108,7 +108,8 @@ class Validate {
   };
   dob(dob) {
     //Validates a user submitted date of birth
-    return true;
+    var re = /".*\/.*\/.*/;
+    return re.test(dob);
   };
 }
 
@@ -116,15 +117,20 @@ class UnitTesting {
   constructor() {
     var v = new Validate();
     var emails = [['',false], ['1', false], ['@.', false], ['ed@com', false], ['another@hotmail/com', false], ['boo', false], ['spoof.', false], ['ed@hotmail.com', true]];
-    var dob = ['12.01.1996', '12/1/1996', '12/1/96', '14/15/19094', '987.1231.123', '', '1', '00/00/0000'];
+    var dob = [['12.01.1996', false], ['12/1/1996', false], ['12/1/96', false], ['14/15/19094', false], ['987.1231.123', false], ['', false], ['1', false], ['00/00/0000', true]];
     console.log('All values should match to pass all tests');
-    /*
-    for x in range(emails.length) {
+    console.log('Emails');
+    var x;
+    for (x = 0; x < emails.length;x++) {
       console.log(v.email(emails[x][0]), emails[x][1]);
     }
-    */
+    console.log('Dates of birth');
+    for(x = 0; x < dob.length; x++) {
+      console.log(v.dob(dob[x][0]), dob[x][1]);
+    }
   }
 }
 
 var db_cnx = new DatabaseConnection();
 var ui = new UserInterface();
+var unitTest = new UnitTesting();

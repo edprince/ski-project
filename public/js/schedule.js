@@ -20,32 +20,25 @@ class controller {
 
     var array = [];
 
-    for (var i = 0; i < 2; i++) {
-      firebase.database().ref('/sessions/' + i).once('value').then(function(snapshot) {
+    for (var session = 1; session <= 2; session++) {
+      firebase.database().ref('/sessions/' + session).once('value').then(function(snapshot){
         array.push(snapshot.val().end);
-
-
-        for (var i = 1; i <= 3; i++) {
-          var tablerow = document.createElement('tr'); //creates a new row
-          for (var j = 1; j <= 5; j++) {
-            var tablecolumn = document.createElement('td');
-            tablecolumn.appendChild(document.createTextNode(array[j]));
-            tablerow.appendChild(tablecolumn);
-          }
-          myTable.appendChild(tablerow);
-        }
-
-
-        });//end of database screenshot
-
-
-      //document.getElementById("test").innerHTML = typeof endtime;
-
-
-
-
+      });//end of database screenshot
     }
-
+    console.log(array[0]);
+    
+    // for (var i = 1; i <= 3; i++) {
+    //   var tablerow = document.createElement('tr'); //creates a new row
+    //   for (var j = 1; j <= 2; j++) {
+    //     var tablecolumn = document.createElement('td');
+    //     tablecolumn.appendChild(document.createTextNode(array[j]));
+    //     tablerow.appendChild(tablecolumn);
+    //   }//end of for loop
+    //   myTable.appendChild(tablerow);
+    // }//end of for loop
+    // Firebase.database().ref('/user/' + uid).once('value').then(function(snapshot) {
+    //   document.getElementById("test").innerHTML = uid;
+    // });
 
   }//end of constructor
 

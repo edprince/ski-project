@@ -7,9 +7,12 @@ function get(id) {
 class DatabaseConnection {
   constructor() {
     var config = {
-       apiKey: "AIzaSyBw2hHMudDYVgfhsWMr6j2fMpOZ8RhZOKw",
-       authDomain: "sphere-c41ce.firebaseapp.com",
-       databaseURL: "https://sphere-c41ce.firebaseio.com", storageBucket: "sphere-c41ce.appspot.com", messagingSenderId: "204422136162"
+    apiKey: "AIzaSyD1__SyPP9HQ4-ViwJxH6s8EACpCY9-k34",
+    authDomain: "skiproject-8236e.firebaseapp.com",
+    databaseURL: "https://skiproject-8236e.firebaseio.com",
+    projectId: "skiproject-8236e",
+    storageBucket: "",
+    messagingSenderId: "633876681860"
     }
     firebase.initializeApp(config);
     var database = firebase.database();
@@ -29,6 +32,7 @@ class Member {
 }
 
 //Class SlopeUI which controlls class Controller 
+//based on GRASP use case control pattern
 class SlopeUI {
   constructor() {
     var searchButton = document.getElementById("SearchButton");
@@ -37,37 +41,38 @@ class SlopeUI {
     var clearButton = document.getElementById("Clear");	
    //Event Listener which Searches for Member when button Search is pressed  
     searchButton.addEventListener('click', function() {	    
-      var db = Controller.GetInstance();
-      //var db = new Controller();
-      db.SearchMember(Member);	    
+    let controller = new Controller() //gets instance of the class (GoF Singleton pattern)
+    controller.SearchMember(Member);	    
     });
    //Event Listener which updates Member details when button Update is pressed
     updateMember.addEventListener('click', function() {
-      var newUpdate = new Member(
+      var newUpdate = new Member( //object which gets all values from the HTML page where the operator has entered new details
 	   get('firstname_update'),
 	   get('surname_update'),
 	   get('email_update'),
+	   get('membership_update'),
 	   get('dob_update'),
 	   get('address_update')
       );
+	    //After the button Update is pressed - Validate class is being triggered
+	    //and if all details are correct - triggers Update Member function
+	    //otherwise re-displays details again 
+	    //and tells sends an alert to the screen - Invalid Input
       var validate = new Validate();
       if (validate.name(newUpdate.firstname) && validate.name(newUpdate.surname) && validate.email(newUpdate.email)) { //(validate.addressvalid(newUpdate.address)){
-	 	//var db = new Controller();
-	        var db = Controller.GetInstance();
-	 	db.UpdateMember(Member);   
+	        let controller = new Controller();; //reference to GoF Singleton instance (from Controller Class)
+	 	controller.UpdateMember(Member);   
 	    } else {
 		  console.log("Invalid input.");
-		  //var db = new Controller();
-		  var db = Controller.GetInstance();
-		  db.SearchMember(Member);
+		  let controller = new Controller(); //reference to GoF Singleton instance (from Controller Class)
+		  controler.SearchMember(Member);
 		  alert('Invalid input. Please re-enter details.');
 	}
     });
     //Event Listener which deletes a member when button Delete is pressed
     deleteMember.addEventListener('click', function() {
-      //var db = new Controller();
-      var db = Controller.GetInstance();
-      db.DeleteMember(Member);
+      let controller = new Controller(); //reference to GoF Singleton instance (from Controller Class)
+      controller.DeleteMember(Member);
     });
     //Event listener which refreshes the page when button Clear is pressed
     clearButton.addEventListener('click', function() {
@@ -76,26 +81,21 @@ class SlopeUI {
   }
 }
 
-var userReference;
-var details = {};
-var instance;
+var userReference; //global variable for user ID
+var details = {}; //global object containing user details
+
+
+let instance = null; 
 class Controller {
-	static GetInstance() {
-		if(instance==null) {
-			instance = new Controller();
+	constructor() { //Singleton pattern instance creation
+		if(!instance) { //if there's no instance, makes a new one
+			instance = this;
 			}
-			return instance;
+			return instance; //returns the instance
 		}
-	
-	
-	/*static GetInstance() {
-		if (instance==null) {
-			//instance=new Controller();
-	} else {
-		return instance;
-	}}
-	*/
 	SearchMember(member) {
+		//Search function which searches for a member by First Name
+		//if found, the member is being displayed on the page
 		var searchMember = document.getElementById("Search").value;
 		var memberRef = firebase.database().ref().child('user');
 		memberRef.orderByChild("firstname").equalTo(searchMember).on("child_added", function(snapshot) {
@@ -115,6 +115,8 @@ class Controller {
    			 });
     	}
 	UpdateMember(member) {
+		//Update function which sends the updated details to the database
+		//and displays them in a table at the Update Memebr Details page
 		firebase.database().ref('user/'+userReference).set({
 			'firstname': details.firstname.value,
 			'surname': details.surname.value,
@@ -127,31 +129,35 @@ class Controller {
 		$("#table_body").append("<tr>");
  	 }
 	 DeleteMember(Member) {
+		 //Delete function which deletes a member after the 
+		 //Delete button is pressed
 		 firebase.database().ref('user/'+ userReference).remove();
 		 window.alert("Member Deleted!");
 		 window.location.reload();
 	 };
 }
+
+//Validation class
 class Validate {
   constructor() {};
   //Validation Functions
   email(email) {
+	  //Function to validate email
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);
 	}
   name(name) {
+	//Function to valiadte names (firstname & surname)
     var re = /^[a-zA-Z]+$/;
     return re.test(name);
   }
-   /* var alphaExp = /^[a-zA-Z]+$/;
-	 if(name.match(alphaExp)){
-	 return true; 
-    } */
   addressvalid(address) {
 	 return ",#-/ !@$%^*(){}|[]\\".indexOf(address) >= 0;
   }
 }
 
+//Class - script for Unit Testing 
+//of email and name
 class UnitTesting {
   constructor() {
     var v = new Validate();

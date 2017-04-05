@@ -1,21 +1,48 @@
 function get(id) {
   return document.getElementById(id).value;
 }
+
 //Initialize Firebase
 class DatabaseConnection {
-  constructor() {
+  /**
+   * @class This intializes the firebase application
+   * using the console credentials.
+   */
+  initialize() {
     var config = {
-       apiKey: "AIzaSyBw2hHMudDYVgfhsWMr6j2fMpOZ8RhZOKw",
+        apiKey: "AIzaSyBw2hHMudDYVgfhsWMr6j2fMpOZ8RhZOKw",
         authDomain: "sphere-c41ce.firebaseapp.com",
         databaseURL: "https://sphere-c41ce.firebaseio.com", storageBucket: "sphere-c41ce.appspot.com", messagingSenderId: "204422136162"
     }
     firebase.initializeApp(config);
     var database = firebase.database();
-
+    firebase.auth().signOut().then(function() {
+        console.log('Signed Out');
+    }, function(error) {
+        console.error('Sign Out Error', error);
+    });
   }
 }
 
+var dbSingleton = new DatabaseConnection();
+
+function dbGetInstance() {
+  return dbSingleton;
+}
+
+dbGetInstance().initialize();
+
 class User {
+  /**
+   * @constructor Creates a user object with required params.
+   * @class user class
+   * @param {string} firstname The users firstname
+   * @param {string} surname The users surname
+   * @param {string} email The users email
+   * @param {string} password The users password
+   * @param {string} dob The users date of birth
+   * @param {string} address The users address
+   */
   constructor(firstname, surname, email, password, membership, dob, address) {
     this.firstname = firstname;
     this.surname = surname;
@@ -27,51 +54,137 @@ class User {
   }
 }
 
+class Validate {
+  /**
+   * @class contains validation functions for name, email and date of birth
+   */
+  //Validation Functions
+  /*
+   * Function takes email address and validates based on regular expression
+   * @param {string} email The users email address
+   * @returns {boolean} true or false depending on output of validation
+   */
+  email(email) {
+    var re = /..*@..*\...*/;
+    return re.test(email);
+   // return true;
+  };
+
+  /**
+   * Function takes name and checks it's not empty
+   * @param {string} name The users name
+   * @return {boolean} true or false depending on the output of validation
+   */
+  name(name) {
+    if (name) {
+      return true;
+    }
+  };
+  /**
+   * Function takes date of birth and checks it is in correct format
+   * @param {string} dob The users date of birth
+   * @return {boolean} true or false depending on the output of validation
+   */
+  dob(dob) {
+    //Validates a user submitted date of birth
+    var re = /".*\/.*\/.*/;
+    return re.test(dob);
+  };
+}
+
 class UserInterface {
-  constructor() {
-    var register_submit = document.getElementById('submit');
-    register_submit.addEventListener('click', function() {
-      var newUser = new User(
-        get('user_firstname'),
-        get('user_surname'),
-        get('user_email'),
-        get('user_password'),
-        get('user_dob'),
-        get('user_address'),
-        document.querySelector('input[name="membership"]:checked').value
-      );
-      if (newUser.membership == 'member') {
-        newUser.membership = 'yes';
-      } else {
-        newUser.membership = 'no';
-      }
-      var validate = new Validate();
-      if (validate.email(newUser.email) && validate.name(newUser.firstname, newUser.surname) /*&& validateDob(dob)*/) {
-        //Submit details to databaseURL
-        var db = new User_controller();
-        db.createUser(newUser);
+  /**
+   * @class Interacts with the user interface
+   */
+
+  /**
+   * Function reads data from the registration form and writes to 'user' object
+   */
+  getData() {
+    var newUser = new User(
+      get('user_firstname'),
+      get('user_surname'),
+      get('user_email'),
+      get('user_password'),
+      get('user_dob'),
+      get('user_address'),
+      document.querySelector('input[name="membership"]:checked').value
+    );
+    if (newUser.membership == 'member') {
+      newUser.membership = 'yes';
+    } else {
+      newUser.membership = 'no';
+    }
+    return newUser;
+  }
+
+  /**
+   * Function writes user information to the Firebase Database
+   * @param {object} newUser The user object containing name, email etc.
+   */
+  writeData(newUser) {
+    var validate = new Validate();
+    if (validate.email(newUser.email) && validate.name(newUser.firstname, newUser.surname) /*&& validateDob(dob)*/) {
+      //Submit details to databaseURL
+      console.log('Creating and writing user information');
+      var db = new User_controller();
+
+      db.createUser(newUser).then(user => {
+        newUser.uid = user.uid;
         db.writeUserInfo(newUser);
-        //db.writeUserInfo(newUser);
-        //writeUserData(email, firstname, surname, dob, membership);
-      } else {
-        //Return user to empty form to re-complete;
-        console.log('Getting here');
-        document.getElementById('user_email').value = '';
-        document.getElementById('user_firstname').value = '';
-        document.getElementById('user_surname').value = '';
-        alert('There was an error with some of your information. Please re-enter.');
+      }).catch(err) {
+        alert(err);
       };
-    });
+    } else {
+      //Return user to empty form to re-complete;
+      console.log('Getting here');
+      document.getElementById('user_email').value = '';
+      document.getElementById('user_firstname').value = '';
+      document.getElementById('user_surname').value = '';
+      alert('There was an error with some of your information. Please re-enter.');
+    };
   }
 }
 
+var uiSingleton = new UserInterface();
+
+function uiGetInstance() {
+  return uiSingleton;
+}
+
+var register_submit = document.getElementById('submit');
+register_submit.addEventListener('click', () => {
+  var newUser = uiGetInstance().getData();
+  console.log('New user: ', newUser);
+  uiGetInstance().writeData(newUser);
+});
+
+
 class User_controller {
+  /**
+   * @constructor Logs when ready to communicate with the database
+   * @class creates new Firebase user and writes user info to database
+   */
   constructor() {
     console.log('Ready to communicate with database')
   }
 
+  /**
+   * Function creates new Firebase user
+   * @param {object} user Object containing all user info (name, email etc.)
+   */
+  createUser(user) {
+    console.log('Creating user');
+    return firebase.auth().createUserWithEmailAndPassword(user.email, user.password);
+  }
+
+  /**
+   * Fubction writes user object data to Firebase database
+   * @param {object} user Object containing all user info (name, email etc.)
+   */
   writeUserInfo(user) {
-    var uid = firebase.auth().currentUser.uid;
+    var uid = user.uid;
+    console.log(uid);
     firebase.database().ref('user/' + uid).set({
       'firstname': user.firstname,
       'surname': user.surname,
@@ -84,36 +197,14 @@ class User_controller {
     });
     window.location = '/main.html';
   }
-  createUser(user) {
-    firebase.auth().createUserWithEmailAndPassword(user.email, user.password).catch(function(error) {
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      alert(errorMessage);
-    });
-  }
 }
 
-class Validate {
-  constructor() {};
-  //Validation Functions
-  email(email) {
-    var re = /..*@..*\...*/;
-    return re.test(email);
-   // return true;
-  };
-  name(name) {
-    if (name) {
-      return true;
-    }
-  };
-  dob(dob) {
-    //Validates a user submitted date of birth
-    var re = /".*\/.*\/.*/;
-    return re.test(dob);
-  };
-}
 
 class UnitTesting {
+  /**
+   * @constructor Runs the unit tests upon instatiation of object
+   * @class Set of unit tests to test validation algorithms for email addresses and date of births
+   */
   constructor() {
     var v = new Validate();
     var emails = [['',false], ['1', false], ['@.', false], ['ed@com', false], ['another@hotmail/com', false], ['boo', false], ['spoof.', false], ['ed@hotmail.com', true]];
@@ -130,7 +221,4 @@ class UnitTesting {
     }
   }
 }
-
-var db_cnx = new DatabaseConnection();
-var ui = new UserInterface();
 var unitTest = new UnitTesting();

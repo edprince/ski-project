@@ -1,20 +1,10 @@
-table#myTable {
-  width: 100%;
-  padding-left: 10px;
-  padding-right: 10px;
+table#myTable { /*CSS to control how the table looks */
+  width: 100%; /*Sets the table width to fill the width of the screen */
+  padding-left: 10px; /*adds space between the table and the left hand side of the screen */
+  padding-right: 10px; /*adds space between the table and the right hand side of the screen */
 }
 
-td {
-  text-align: center;
-}
-
-#myInput {
-    background-image: url('/css/searchicon.png'); /* Add a search icon to input */
-    background-position: 10px 12px; /* Position the search icon */
-    background-repeat: no-repeat; /* Do not repeat the icon image */
-    width: 100%; /* Full-width */
-    font-size: 16px; /* Increase font-size */
-    padding: 12px 20px 12px 40px; /* Add some padding */
-    border: 1px solid #ddd; /* Add a grey border */
-    margin-bottom: 12px; /* Add some space below the input */
+td, th { /*CSS to control how the table column looks */
+  text-align: center; /*Sets the text to be in the center of the column */
+  font-size: 20px; /*Sets the font size */
 }

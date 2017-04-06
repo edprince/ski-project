@@ -10,52 +10,58 @@ var config = {
 firebase.initializeApp(config);
 //end of initializing firebase
 
-class controller {
+class controller { //controller class
   constructor() {
 
     var myTable = document.getElementById("myTable");//gets the table
-
     var database = firebase.database
 
-    for (var session = 1; session <= 3; session++) {
-      var temp = firebase.database().ref('/sessions/' + session).once('value').then(function(snapshot){
+    for (var session = 1; session <= 3; session++) {//for loop to itterate over each session
+      var temp = firebase.database().ref('/sessions/' + session).once('value').then(function(snapshot){//start of firebase snapchot
         var tablerow = document.createElement('tr'); //creates a new row
-        var tablecolumn = document.createElement('td');
+        var tablecolumn = document.createElement('td'); //creates a new column
+        //gets the value of instructor from the database snapshot and appeneds it to the column of the table
         tablecolumn.appendChild(document.createTextNode(snapshot.val().instructor));
-        tablerow.appendChild(tablecolumn);
-        var tablecolumn = document.createElement('td');
+        tablerow.appendChild(tablecolumn);//appends the column to the row (i.e. moves on to the next column)
+        var tablecolumn = document.createElement('td');//creates a new cloumn
+        //gets the value of slope from the database snapshot and appeneds it to the column of the table
         tablecolumn.appendChild(document.createTextNode(snapshot.val().slope));
-        tablerow.appendChild(tablecolumn);
-        var tablecolumn = document.createElement('td');
+        tablerow.appendChild(tablecolumn);//appends the column to the row (i.e. moves on to the next column)
+        var tablecolumn = document.createElement('td');//creates a new cloumn
+        //gets the value of start from the database snapshot and appeneds it to the column of the table
         tablecolumn.appendChild(document.createTextNode(snapshot.val().start));
-        tablerow.appendChild(tablecolumn);
-        var tablecolumn = document.createElement('td');
+        tablerow.appendChild(tablecolumn);//appends the column to the row (i.e. moves on to the next column)
+        var tablecolumn = document.createElement('td');//creates a new cloumn
+        //gets the value of end from the database snapshot and appeneds it to the column of the table
         tablecolumn.appendChild(document.createTextNode(snapshot.val().end));
-        tablerow.appendChild(tablecolumn);
-        var tablecolumn = document.createElement('td');
+        tablerow.appendChild(tablecolumn);//appends the column to the row (i.e. moves on to the next column)
+        var tablecolumn = document.createElement('td');//creates a new cloumn
+        //gets the value of group_size from the database snapshot and appeneds it to the column of the table
         tablecolumn.appendChild(document.createTextNode(snapshot.val().group_size));
-        tablerow.appendChild(tablecolumn);
-        var tablecolumn = document.createElement('td');
-        myTable.appendChild(tablerow);
+        tablerow.appendChild(tablecolumn);//appends the column to the row (i.e. moves on to the next column)
+        var tablecolumn = document.createElement('td');//creates a new cloumn
+        myTable.appendChild(tablerow);//appends the row to the table (i.e. moves on to the next row)
       });//end of database screenshot
 
-    }
-
-    // for (var i = 1; i <= 3; i++) {
-    //   var tablerow = document.createElement('tr'); //creates a new row
-    //   for (var j = 1; j <= 2; j++) {
-    //     var tablecolumn = document.createElement('td');
-    //     tablecolumn.appendChild(document.createTextNode('hello'));
-    //     tablerow.appendChild(tablecolumn);
-    //   }//end of for loop
-    //   myTable.appendChild(tablerow);
-    // }//end of for loop
-
+    }//end of for loop
   }//end of constructor
-
 }//end of class
 
-var thisiscontroller = new controller
+class Singleton {//end of Singleton class, used to
+  constructor(){
+    this.instance
+  }
+
+  static GetInstance(){
+    if(this.instance==null){
+      this.instance = new controller;
+    }
+    return this.instance;
+  }
+}
+
+
+Singleton.GetInstance();
 
 function myFunction() {
       // Declare variables

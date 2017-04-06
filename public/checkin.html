@@ -16,14 +16,23 @@
   <body>
     <div class="form">
      	<h1>Sphere - Checkin</h1>
-    	<input type = "text" id = "NameSearch"> 
+    	<input type = "text" id = "NameSearch" placeholder = "Please enter member's First name"> 
 		<button id = "SearchButton">Search</button>
 	<br>
 	<br>
-	<B>Select a Booking:</B> <BR>
-		<select id="list" size = 3></select>
-	</SELECT>
-	<button id ="Checkin">Checkin</button>
+	<table id='checkin table'>
+	<tbody id='table body'></tbody>
+        <thead>
+		<tr>
+		    <td>Select a booking from drop down </td>
+			<td>Checkin </td>
+		</tr>
+		<tr>
+			<td><select id="list" style=" height:40px;margin-bottom:8px;margin-top:8px;"></select></td>
+			<td><button id ="Checkin">Checkin</button></td>
+	    </tr>
+		</thead>
+	</table>
 	<button id ="Clear">Clear</button>
 	<p id="Message"></p>
 	</div>

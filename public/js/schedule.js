@@ -46,13 +46,12 @@ class controller { //controller class
     }//end of for loop
   }//end of constructor
 
-  function filter() {
-        // Declare variables
-    var input, filter, table, tr, td, i;
-    input = document.getElementById("myInput");
-    filter = input.value.toUpperCase();
-    table = document.getElementById("myTable");
-    tr = table.getElementsByTagName("tr");
+  filter() {
+    //Declare variables
+    var input = document.getElementById("myInput");
+    var filter = input.value.toUpperCase();
+    var table = document.getElementById("myTable");
+    var tr = table.getElementsByTagName("tr");
 
     // Loop through all table rows, and hide those who don't match the search query
     for (i = 0; i < tr.length; i++) {
@@ -82,4 +81,4 @@ class Singleton {//end of Singleton class, used to insure only one instance of t
   }
 }
 
-Singleton.GetInstance();
+var control = Singleton.GetInstance();
